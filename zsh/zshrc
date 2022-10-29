@@ -1,0 +1,81 @@
+#!/usr/bin/env zsh
+
+# homebrew's PATH setup
+eval $(/opt/homebrew/bin/brew shellenv)
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# To customize prompt, run `p10k configure` or edit p10k.zsh.
+[[ -f "$DOTFILES/zsh/plugins/p10k.zsh" ]] && source $DOTFILES/zsh/plugins/p10k.zsh
+
+# +------------+
+# | NAVIGATION |
+# +------------+
+
+setopt AUTO_PUSHD           # Push the old directory onto the stack on cd.
+setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
+setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
+
+setopt CORRECT              # Spelling correction
+
+# Quickly go back to a specific parent directory instead of typing cd ../../.. redundantly.
+# Reference: https://github.com/Tarrasch/zsh-bd
+source $DOTFILES/zsh/plugins/bd.zsh
+
+# +---------+
+# | HISTORY |
+# +---------+
+
+setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed;command' format.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
+setopt HIST_IGNORE_DUPS          # Do not record an event that was just recorded again.
+
+# Plugins. Ref: https://github.com/zplug/zplug
+# TODO: replace zplug
+export ZPLUG_HOME=/opt/homebrew/opt/zplug
+source $ZPLUG_HOME/init.zsh
+
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+zplug "romkatv/powerlevel10k", as:theme, depth:1
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-completions"
+zplug "zdharma-continuum/fast-syntax-highlighting"
+zplug "zsh-users/zsh-history-substring-search"
+zplug "zpm-zsh/ls"
+zplug "plugins/docker", from:oh-my-zsh
+zplug "lib/completion", from:oh-my-zsh
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+# Then, source plugins and add commands to $PATH
+zplug load
+
+# +------------+
+# | COMPLETION |
+# +------------+
+
+autoload -U compinit && compinit
+zstyle ':completion:*' menu yes select
+
+# export PATH=/usr/local/opt/python@3.7/bin:$PATH
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+# +---------+
+# | ALIASES |
+# +---------+
+
+source $DOTFILES/aliases/aliases
+alias ibrew="arch -x86_64 /usr/local/bin/brew"

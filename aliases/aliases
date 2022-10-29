@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# +-----+
+# | Zsh |
+# +-----+
+
+# Zsh Directory Stack, track the last 9 visited directories and go back by the number
+alias d='dirs -v'
+for index ({1..9}) alias "$index"="cd +${index}"; unset index # directory stack
+
+
+# +----+
+# | cp |
+# +----+
+
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias rm='rm -iv'
+
+# +--------+
+# | Neovim |
+# +--------+
+
+# alias vim='nvim'
+# alias vi='nvim'
