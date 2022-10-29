@@ -1,3 +1,6 @@
+# Quickly go back to a specific parent directory instead of typing cd ../../.. redundantly.
+# Reference: https://github.com/Tarrasch/zsh-bd
+
 bd () {
   (($#<1)) && {
     print -- "usage: $0 <name-of-any-parent-directory>"

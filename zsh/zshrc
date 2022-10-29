@@ -3,6 +3,10 @@
 # homebrew's PATH setup
 eval $(/opt/homebrew/bin/brew shellenv)
 
+# +-------+
+# | THEME |
+# +-------+
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -23,8 +27,6 @@ setopt PUSHD_SILENT         # Do not print the directory stack after pushd or po
 
 setopt CORRECT              # Spelling correction
 
-# Quickly go back to a specific parent directory instead of typing cd ../../.. redundantly.
-# Reference: https://github.com/Tarrasch/zsh-bd
 source $DOTFILES/zsh/plugins/bd.zsh
 
 # +---------+
@@ -35,9 +37,12 @@ setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed
 setopt SHARE_HISTORY             # Share history between all sessions.
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
 setopt HIST_IGNORE_DUPS          # Do not record an event that was just recorded again.
+setopt HIST_FIND_NO_DUPS
 
-# Plugins. Ref: https://github.com/zplug/zplug
-# TODO: replace zplug
+# +---------+
+# | ZPLUG |
+# +---------+
+
 export ZPLUG_HOME=/opt/homebrew/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
@@ -69,13 +74,17 @@ zplug load
 autoload -U compinit && compinit
 zstyle ':completion:*' menu yes select
 
-# export PATH=/usr/local/opt/python@3.7/bin:$PATH
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
 # +---------+
 # | ALIASES |
 # +---------+
 
 source $DOTFILES/aliases/aliases
 alias ibrew="arch -x86_64 /usr/local/bin/brew"
+
+# +--------+
+# | Python |
+# +--------+
+
+# export PATH=/usr/local/opt/python@3.7/bin:$PATH
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
