@@ -1,6 +1,6 @@
 # Dotfiles
 
-My configuration for my develope environment.
+The configuration files for my develope environment.
 
 ## Dependencies
 - [zlpug](https://github.com/zplug/zplug)
