@@ -8,6 +8,11 @@
 alias d='dirs -v'
 for index ({1..9}) alias "$index"="cd +${index}"; unset index # directory stack
 
+# +----------------+
+# | Homebrew x86_64|
+# +----------------+
+alias ibrew="arch -x86_64 /usr/local/bin/brew"
+
 # +----+
 # | cp |
 # +----+
