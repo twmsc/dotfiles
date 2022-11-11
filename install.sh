@@ -45,3 +45,5 @@ fi
 . $DOTFILES/install/install-zsh.sh
 
 dot_is_installed git && dot_install git
+dot_is_installed npm && dot_install npm
+dot_is_installed python && dot_install python
