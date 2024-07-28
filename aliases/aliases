@@ -27,3 +27,10 @@ alias rm='rm -iv'
 
 # alias vim='nvim'
 # alias vi='nvim'
+
+# +-----+
+# | eza |
+# +-----+
+
+alias ll="eza -l -g --icons"
+alias ls="eza --icons"
